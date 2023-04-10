@@ -174,4 +174,7 @@ export default defineConfig({
     syntaxHighlight: 'prism',
   },
   integrations: [sitemap()],
+  server:{
+    host:'0.0.0.0',
+  }
 });
