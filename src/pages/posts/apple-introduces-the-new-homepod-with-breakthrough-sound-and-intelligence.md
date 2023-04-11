@@ -21,9 +21,10 @@ meta:
 keywords: key1, key2, key3
 ---
 I. Using Cloudflare Workers to address the issue of inaccessibility of OpenAI and ChatGPT APIs
+(https://github.com/noobnooc/noobnooc/discussions/9)
 
 Prior Preparations:
-To proceed with the solution, one must possess an unauthenticated domain name, for instance, by registering for one on Ali Cloud, which may require a real-name authentication process. An alternative option is to use Tencent Cloud to authenticate oneself, in which case the process may cost just 7 RMB per year. Additionally, one will need to create an account with Cloudflare.
+To proceed with the solution, one must possess an unauthenticated domain name, for instance, by registering for one on Ali Cloud, which may require a real-name authentication process. An alternative option is to use Tencent Cloud to authenticate oneself. Additionally, one will need to create an account with Cloudflare.
 
 Deployment:
 To begin with the deployment, one must visit the Cloudflare management interface and select the "Websites" option on the side panel. By clicking on the "Add a Site" button, one can follow the prompts provided by Cloudflare to modify the NS address on their domain name registrar (e.g. Tencent Cloud), and wait until domain name resolution is successful to proceed with the remaining tasks.
@@ -32,24 +33,30 @@ Next, create a Cloudflare worker by selecting the "Workers" option on the Cloudf
 
 
 const TELEGRAPH_URL = 'https://api.openai.com';
-	addEventListener('fetch', event => {
-	event.respondWith(handleRequest(event.request))
-	})
-	async function handleRequest(request) {
-	const url = new URL(request.url);
-	url.host = TELEGRAPH_URL.replace(/^https?:\/\//, '');
-	const modifiedRequest = new Request(url.toString(), {
-	headers: request.headers,
-	method: request.method,
-	body: request.body,
-	redirect: 'follow'
-	});
-	const response = await fetch(modifiedRequest);
-	const modifiedResponse = new Response(response.body, response);
-	// 添加允许跨域访问的响应头
-	modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
-	return modifiedResponse;
-	}
+
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  url.host = TELEGRAPH_URL.replace(/^https?:\/\//, '');
+
+  const modifiedRequest = new Request(url.toString(), {
+    headers: request.headers,
+    method: request.method,
+    body: request.body,
+    redirect: 'follow'
+  });
+
+  const response = await fetch(modifiedRequest);
+  const modifiedResponse = new Response(response.body, response);
+
+  // 添加允许跨域访问的响应头
+  modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
+
+  return modifiedResponse;
+}
 
 
 Lastly, click on the "Save and deploy" button in the lower right corner to deploy the code. A confirmation dialog will pop up, where you should press "Save and deploy" to confirm your deployment. Bind your domain name by navigating to "Triggers" on Cloudflare Workers' management interface, selecting the "Custom Domians" tab, and clicking on the "Add Custom Domain" button to bind the domain name. Wait for a while, and you should be able to use your own domain name instead of the OpenAI API address.
@@ -57,6 +64,7 @@ Lastly, click on the "Save and deploy" button in the lower right corner to deplo
 This way, one can access the API address without requiring any VPN to connect to it.
 
 II. One-click ChatGPT deployment for your own web UI
+(https://github.com/Yidadaa/ChatGPT-Next-Web)
 
 To keep one's ChatGPT UI updated:
 
@@ -85,9 +93,10 @@ As a result, one can access all domains and APIs without requiring a VPN.
 
 
 I. 使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT API 不可访问的问题
+(https://github.com/noobnooc/noobnooc/discussions/9)
 
 前期准备：
-为了进行这项解决方案，你必须拥有一个未经认证的域名，例如在阿里云上注册一个，这可能需要进行真实姓名认证过程。另一个选择是使用腾讯云进行认证，此时该过程可能仅需每年 7 元人民币。此外，你还需要在 Cloudflare 上创建一个帐户。
+为了进行这项解决方案，你必须拥有一个未经认证的域名，例如在阿里云上注册一个，这可能需要进行真实姓名认证过程。另一个选择是使用腾讯云进行认证。此外，你还需要在 Cloudflare 上创建一个帐户。
 
 部署：
 要开始部署，你需要访问 Cloudflare 管理界面，在侧边栏中选择“网站”选项。通过单击“添加站点”按钮，你可以按照 Cloudflare 提供的提示修改其域名注册器（例如腾讯云）上的 NS 地址，然后等待域名解析成功，以继续进行剩余的任务。
@@ -96,31 +105,37 @@ I. 使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT API 不可访问的问题
 
 
 const TELEGRAPH_URL = 'https://api.openai.com';
-	addEventListener('fetch', event => {
-	event.respondWith(handleRequest(event.request))
-	})
-	async function handleRequest(request) {
-	const url = new URL(request.url);
-	url.host = TELEGRAPH_URL.replace(/^https?:\/\//, '');
-	const modifiedRequest = new Request(url.toString(), {
-	headers: request.headers,
-	method: request.method,
-	body: request.body,
-	redirect: 'follow'
-	});
-	const response = await fetch(modifiedRequest);
-	const modifiedResponse = new Response(response.body, response);
-	// 添加允许跨域访问的响应头
-	modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
-	return modifiedResponse;
-	}
 
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  url.host = TELEGRAPH_URL.replace(/^https?:\/\//, '');
+
+  const modifiedRequest = new Request(url.toString(), {
+    headers: request.headers,
+    method: request.method,
+    body: request.body,
+    redirect: 'follow'
+  });
+
+  const response = await fetch(modifiedRequest);
+  const modifiedResponse = new Response(response.body, response);
+
+  // 添加允许跨域访问的响应头
+  modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
+
+  return modifiedResponse;
+}
 
 最后，单击右下角的“保存和部署”按钮来部署代码。一个确认对话框将弹出，你应该按“保存和部署”以确认你的部署。通过导航到 Cloudflare Workers 的管理界面上的“触发器”，选择“自定义域名”选项卡，然后单击“添加自定义域名”按钮来绑定域名。等待片刻，你就可以使用自己的域名而不需要 VPN 来连接 OpenAI API。
 
 这样，你就可以访问 API 地址而不需要 VPN 进行连接。
 
 II. 为你自己的 Web UI 部署 ChatGPT 的一键部署
+(https://github.com/Yidadaa/ChatGPT-Next-Web)
 
 为了保持 ChatGPT UI 的最新状态：
 
