@@ -29,7 +29,8 @@ Deployment:
 To begin with the deployment, one must visit the Cloudflare management interface and select the "Websites" option on the side panel. By clicking on the "Add a Site" button, one can follow the prompts provided by Cloudflare to modify the NS address on their domain name registrar (e.g. Tencent Cloud), and wait until domain name resolution is successful to proceed with the remaining tasks.
  
 Next, create a Cloudflare worker by selecting the "Workers" option on the Cloudflare management interface and clicking on "Create a Service" to create a new worker. It is not necessary to select a starter at this point. Then, edit the code for the Cloudflare worker to include the following:
-'''
+
+
 const TELEGRAPH_URL = 'https://api.openai.com';
 	addEventListener('fetch', event => {
 	event.respondWith(handleRequest(event.request))
@@ -49,7 +50,7 @@ const TELEGRAPH_URL = 'https://api.openai.com';
 	modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
 	return modifiedResponse;
 	}
-'''
+
 
 Lastly, click on the "Save and deploy" button in the lower right corner to deploy the code. A confirmation dialog will pop up, where you should press "Save and deploy" to confirm your deployment. Bind your domain name by navigating to "Triggers" on Cloudflare Workers' management interface, selecting the "Custom Domians" tab, and clicking on the "Add Custom Domain" button to bind the domain name. Wait for a while, and you should be able to use your own domain name instead of the OpenAI API address.
 
@@ -93,7 +94,7 @@ I. 使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT API 不可访问的问题
  
 接下来，在 Cloudflare 管理界面上选择“Workers”选项，单击“创建服务”以创建一个新的 worker，此时无需选择 starter。然后，编辑 Cloudflare worker 的代码以包括以下内容：
 
-'''
+
 const TELEGRAPH_URL = 'https://api.openai.com';
 	addEventListener('fetch', event => {
 	event.respondWith(handleRequest(event.request))
@@ -113,7 +114,7 @@ const TELEGRAPH_URL = 'https://api.openai.com';
 	modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
 	return modifiedResponse;
 	}
-'''
+
 
 最后，单击右下角的“保存和部署”按钮来部署代码。一个确认对话框将弹出，你应该按“保存和部署”以确认你的部署。通过导航到 Cloudflare Workers 的管理界面上的“触发器”，选择“自定义域名”选项卡，然后单击“添加自定义域名”按钮来绑定域名。等待片刻，你就可以使用自己的域名而不需要 VPN 来连接 OpenAI API。
 
